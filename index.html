@@ -13,6 +13,20 @@
         height: 100%;
         background-color: #e5e7eb;
       }
+      
+      /* 
+         CRITICAL FIX: Tailwind CSS preflight applies 'max-width: 100%' to all images.
+         This breaks Leaflet maps (tiles disappear or show grid lines).
+         We must override this specifically for Leaflet images.
+      */
+      .leaflet-pane img, 
+      .leaflet-tile, 
+      .leaflet-marker-icon, 
+      .leaflet-marker-shadow {
+        max-width: none !important;
+        max-height: none !important;
+      }
+
       /* Custom scrollbar for the sidebar */
       .custom-scrollbar::-webkit-scrollbar {
         width: 6px;
@@ -40,14 +54,14 @@
   <script type="importmap">
 {
   "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
-    "vite": "https://aistudiocdn.com/vite@^7.2.6",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
     "react-leaflet": "https://aistudiocdn.com/react-leaflet@^5.0.0",
-    "leaflet": "https://aistudiocdn.com/leaflet@^1.9.4"
+    "leaflet": "https://aistudiocdn.com/leaflet@^1.9.4",
+    "vite": "https://aistudiocdn.com/vite@^7.2.6",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
   }
 }
 </script>

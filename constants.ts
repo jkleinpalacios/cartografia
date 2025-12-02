@@ -4,6 +4,7 @@ export const WMS_URL = 'https://www4.sii.cl/mapasui/services/ui/wmsProxyService/
 export const WORKER_URL = 'https://sii-proxy.javierb1820.workers.dev';
 
 export const COMUNAS_CONFIG: CommuneConfig[] = [
+  { name: "Santiago Centro", code: 13101, layerName: "sii:BR_CART_SANTIAGO_CENTRO_WMS" },
   { name: "Las Condes", code: 15108, layerName: "sii:BR_CART_LAS_CONDES_WMS" },
   { name: "Vitacura", code: 15160, layerName: "sii:BR_CART_VITACURA_WMS" },
   { name: "Lo Barnechea", code: 15161, layerName: "sii:BR_CART_LO_BARNECHEA_WMS" },
@@ -12,7 +13,6 @@ export const COMUNAS_CONFIG: CommuneConfig[] = [
   { name: "Ñuñoa", code: 15105, layerName: "sii:BR_CART_NUNOA_WMS" },
   { name: "Recoleta", code: 13159, layerName: "sii:BR_CART_RECOLETA_WMS" },
   { name: "Independencia", code: 13167, layerName: "sii:BR_CART_INDEPENDENCIA_WMS"},
-  { name: "Santiago Centro", code: 13101, layerName: "sii:BR_CART_SANTIAGO_CENTRO_WMS" },
   { name: "Santiago Oeste", code: 13134, layerName: "sii:BR_CART_SANTIAGO_OESTE_WMS" },
   { name: "Santiago Sur", code: 13135, layerName: "sii:BR_CART_SANTIAGO_SUR_WMS" },
   { name: "Estación Central", code: 14157, layerName: "sii:BR_CART_ESTACION_CENTRAL_WMS" },

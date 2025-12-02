@@ -1,41 +1,29 @@
 import React, { useState } from 'react';
 import { COMUNAS_CONFIG } from '../constants';
-import { Map, Layers, ChevronRight, ChevronLeft, CheckSquare, Square, Palette, EyeOff, Eye, Cpu } from 'lucide-react';
+import { Map, Layers, ChevronRight, ChevronLeft, CheckSquare, Square } from 'lucide-react';
 
 interface LayerSidebarProps {
   activeLayers: string[];
   toggleLayer: (layerName: string) => void;
   baseLayer: 'osm' | 'satellite';
   setBaseLayer: (layer: 'osm' | 'satellite') => void;
-  layerColor: string;
-  setLayerColor: (color: string) => void;
-  isCleanMode: boolean;
-  setIsCleanMode: (isClean: boolean) => void;
 }
 
 export const LayerSidebar: React.FC<LayerSidebarProps> = ({ 
   activeLayers, 
   toggleLayer,
   baseLayer,
-  setBaseLayer,
-  layerColor,
-  setLayerColor,
-  isCleanMode,
-  setIsCleanMode
+  setBaseLayer
 }) => {
   const [isOpen, setIsOpen] = useState(true);
 
-  // Group communes alphabetically for easier navigation
-  const sortedComunas = [...COMUNAS_CONFIG].sort((a, b) => a.name.localeCompare(b.name));
-
-  const colorOptions = [
-    { id: 'original', label: 'Original', color: 'bg-cyan-400' },
-    { id: 'purple', label: 'Morado', color: 'bg-purple-600' },
-    { id: 'red', label: 'Rojo', color: 'bg-red-600' },
-    { id: 'orange', label: 'Naranja', color: 'bg-orange-500' },
-    { id: 'green', label: 'Verde', color: 'bg-green-600' },
-    { id: 'black', label: 'Negro', color: 'bg-black' },
-  ];
+  // Group communes alphabetically for easier navigation, but pin Santiago Centro to top
+  const sortedComunas = [...COMUNAS_CONFIG].sort((a, b) => {
+    const priority = "Santiago Centro";
+    if (a.name === priority) return -1;
+    if (b.name === priority) return 1;
+    return a.name.localeCompare(b.name);
+  });
 
   return (
     <div className={`absolute left-0 top-0 h-full z-[1000] transition-all duration-300 flex ${isOpen ? 'w-80' : 'w-12'}`}>
@@ -44,7 +32,7 @@ export const LayerSidebar: React.FC<LayerSidebarProps> = ({
         <div className="p-4 bg-blue-900 text-white flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
             <Map size={20} />
-            <h1 className="font-bold text-lg whitespace-nowrap">Visor SII</h1>
+            <h1 className="font-bold text-lg whitespace-nowrap">Cartografía RM</h1>
           </div>
         </div>
 
@@ -66,52 +54,6 @@ export const LayerSidebar: React.FC<LayerSidebarProps> = ({
             >
               Satelital
             </button>
-          </div>
-        </div>
-
-        {/* Layer Style Selection */}
-        <div className="p-4 border-b border-gray-200 shrink-0">
-          <div className="flex items-center justify-between mb-3">
-             <h2 className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-2">
-                <Palette size={14} /> Estilo y Color
-             </h2>
-          </div>
-
-          {/* Clean Mode Toggle */}
-          <div className={`mb-4 p-2 rounded-lg border transition-colors ${isCleanMode ? 'bg-purple-50 border-purple-200' : 'bg-gray-50 border-gray-100'}`}>
-             <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-gray-700">
-                   {isCleanMode ? <Cpu size={16} className="text-purple-600" /> : <Eye size={16} className="text-gray-500" />}
-                   <span className={`font-medium ${isCleanMode ? 'text-purple-800' : ''}`}>Algoritmo DSP</span>
-                </div>
-                
-                <button 
-                  onClick={() => setIsCleanMode(!isCleanMode)}
-                  className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors ${isCleanMode ? 'bg-purple-600' : 'bg-gray-300'}`}
-                >
-                  <span className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${isCleanMode ? 'translate-x-5' : 'translate-x-1'}`} />
-                </button>
-             </div>
-             <p className="text-[10px] text-gray-500 mt-2 pl-6 leading-tight">
-               {isCleanMode 
-                 ? "Activo: Ablación espectral de texto y puenteo estructural de líneas."
-                 : "Modo Limpio desactivado."
-               }
-             </p>
-          </div>
-
-          {/* Color Grid */}
-          <div className="grid grid-cols-2 gap-2">
-            {colorOptions.map((opt) => (
-              <button
-                key={opt.id}
-                onClick={() => setLayerColor(opt.id)}
-                className={`flex items-center gap-2 py-1.5 px-2 text-xs rounded-md border transition-all ${layerColor === opt.id ? 'bg-gray-100 border-gray-400 ring-1 ring-gray-300' : 'bg-white border-gray-200 hover:bg-gray-50'}`}
-              >
-                <span className={`w-3 h-3 rounded-full ${opt.color} border border-gray-300`}></span>
-                {opt.label}
-              </button>
-            ))}
           </div>
         </div>
 
@@ -138,7 +80,7 @@ export const LayerSidebar: React.FC<LayerSidebarProps> = ({
         </div>
         
         <div className="p-3 bg-gray-50 text-xs text-gray-500 border-t text-center shrink-0">
-          Datos provistos por SII. Uso referencial.
+          Uso referencial
         </div>
       </div>
 

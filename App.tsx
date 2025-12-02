@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, WMSTileLayer, ZoomControl, useMapEvents } from 'react-leaflet';
 import { LatLng } from 'leaflet';
-import { COMUNAS_CONFIG, WMS_URL } from './constants';
+import { WMS_URL } from './constants';
 import { LayerSidebar } from './components/LayerSidebar';
 import { MapClickHandler } from './components/MapClickHandler';
-import { CleanWMSTileLayer } from './components/CleanWMSTileLayer';
 import { SIIFeatureData } from './types';
 import L from 'leaflet';
 
@@ -29,11 +28,6 @@ L.Marker.prototype.options.icon = DefaultIcon;
 const App: React.FC = () => {
   const [activeLayers, setActiveLayers] = useState<string[]>([]);
   const [baseLayer, setBaseLayer] = useState<'osm' | 'satellite'>('osm');
-  
-  // Layer Style State
-  const [layerColor, setLayerColor] = useState<string>('original'); // 'original', 'purple', 'red', etc.
-  const [isCleanMode, setIsCleanMode] = useState<boolean>(false);   // Removes black text via pixel processing
-
   const [zoomLevel, setZoomLevel] = useState(10);
   
   // Initialize with Santiago Centro active so user sees something
@@ -58,9 +52,8 @@ const App: React.FC = () => {
 
   const center: [number, number] = [-33.45, -70.66]; // Santiago Center
 
-  // CSS Class for coloring
-  // Since Clean Mode now outputs a Cyan image (just without text), we use standard color filters for both.
-  const currentClass = `wms-color-${layerColor}`;
+  // Enforced Purple Style
+  const currentClass = `wms-color-purple`;
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -70,10 +63,6 @@ const App: React.FC = () => {
         toggleLayer={toggleLayer} 
         baseLayer={baseLayer}
         setBaseLayer={setBaseLayer}
-        layerColor={layerColor}
-        setLayerColor={setLayerColor}
-        isCleanMode={isCleanMode}
-        setIsCleanMode={setIsCleanMode}
       />
 
       <div className="w-full h-full relative">
@@ -113,36 +102,19 @@ const App: React.FC = () => {
 
           {/* Active Commune Layers */}
           {activeLayers.map(layerName => (
-            isCleanMode ? (
-              // Custom Layer that removes text (CPU intensive, requires Proxy)
-              <CleanWMSTileLayer
-                 key={`${layerName}-clean-${currentClass}`}
-                 url={WMS_URL}
-                 layers={layerName}
-                 styles="PREDIOS_WMS_V0"
-                 transparent={true}
-                 version="1.1.1"
-                 minZoom={18}
-                 maxZoom={22}
-                 className={currentClass} 
-                 zIndex={20}
-              />
-            ) : (
-              // Standard Fast Layer
-              <WMSTileLayer
-                key={`${layerName}-std-${currentClass}`} 
-                url={WMS_URL}
-                layers={layerName}
-                styles="PREDIOS_WMS_V0"
-                format="image/png"
-                transparent={true}
-                version="1.1.1"
-                minZoom={18}
-                maxZoom={22}
-                className={currentClass}
-                zIndex={20}
-              />
-            )
+            <WMSTileLayer
+              key={`${layerName}-purple`} 
+              url={WMS_URL}
+              layers={layerName}
+              styles="PREDIOS_WMS_V0"
+              format="image/png"
+              transparent={true}
+              version="1.1.1"
+              minZoom={18}
+              maxZoom={22}
+              className={currentClass}
+              zIndex={20}
+            />
           ))}
 
           <ZoomControl position="bottomright" />

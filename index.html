@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visor WMS SII - React</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <style>
+      /* Fix for Leaflet tiles in some environments */
+      .leaflet-container {
+        width: 100%;
+        height: 100%;
+        background-color: #e5e7eb;
+      }
+      /* Custom scrollbar for the sidebar */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+
+      /* --- WMS COLOR FILTERS --- */
+      /* Base Color from SII is Cyan (~180deg on Hue Wheel) */
+      
+      /* Standard Cyan - Boost saturation for cleaner lines */
+      .wms-color-original {
+        filter: saturate(120%);
+      }
+
+      /* Morado: Cyan(180) + 100 = 280 (Purple) */
+      /* Increased saturation heavily to make thin lines pop */
+      .wms-color-purple {
+        filter: hue-rotate(100deg) saturate(250%) brightness(0.9);
+      }
+      
+      /* Rojo: Cyan(180) + 180 = 360/0 (Red) */
+      .wms-color-red {
+        filter: hue-rotate(180deg) saturate(300%) contrast(1.1);
+      }
+      
+      /* Naranja: Cyan(180) + 160 = 340 (Orange/Pinkish) */
+      .wms-color-orange {
+        filter: hue-rotate(160deg) saturate(250%);
+      }
+
+      /* Verde: Cyan(180) - 60 = 120 (Green) */
+      .wms-color-green {
+        filter: hue-rotate(-60deg) saturate(200%) brightness(0.9);
+      }
+
+      /* Negro */
+      .wms-color-black {
+        filter: brightness(0);
+      }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "leaflet/": "https://aistudiocdn.com/leaflet@^1.9.4/",
+    "leaflet": "https://aistudiocdn.com/leaflet@^1.9.4",
+    "react-leaflet": "https://aistudiocdn.com/react-leaflet@^5.0.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

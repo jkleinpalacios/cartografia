@@ -1,0 +1,5 @@
+{
+  "name": "Visor SII Multicomuna",
+  "description": "A modern React application to visualize Chilean SII cadastral maps (WMS) and retrieve property information via coordinate proxy.",
+  "requestFramePermissions": []
+}

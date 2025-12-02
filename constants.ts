@@ -1,7 +1,8 @@
 import { CommuneConfig } from './types';
 
-export const WMS_URL = 'https://www4.sii.cl/mapasui/services/ui/wmsProxyService/call?';
 export const WORKER_URL = 'https://sii-proxy.javierb1820.workers.dev';
+// Usamos el proxy para las teselas del mapa también, para evitar bloqueo por Referer/CORS en Vercel
+export const WMS_URL = `${WORKER_URL}/mapasui/services/ui/wmsProxyService/call?`;
 
 export const COMUNAS_CONFIG: CommuneConfig[] = [
   { name: "Santiago Centro", code: 13101, layerName: "sii:BR_CART_SANTIAGO_CENTRO_WMS" },
